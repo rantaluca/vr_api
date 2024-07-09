@@ -68,8 +68,46 @@ public class LocalGPTRequest : MonoBehaviour
             yield break;
         }
         
-        helveticaText.Text = text;
-        helveticaText.GenerateText();
+        // Display characters one by one
+        StringBuilder displayedText = new StringBuilder();
+        for (int i = 0; i < text.Length; i++)
+        {
+            char currentChar = text[i];
+            Debug.Log(currentChar);
+
+            // Jump a line if the character is a period
+            if (currentChar == '.')
+            {
+                displayedText.Append('\n');
+            }
+            else
+            {
+                // Replace special characters with their non-accented versions
+                switch (currentChar)
+                {
+                    case 'é': case 'è': case 'ê': case 'ë':
+                        currentChar = 'e';
+                        break;
+                    case 'à': case 'â': case 'ä':
+                        currentChar = 'a';
+                        break;
+                    case 'î':
+                        currentChar = 'i';
+                        break;
+                    case 'ù':
+                        currentChar = 'u';
+                        break;
+                    case 'ç':
+                        currentChar = 'c';
+                        break;
+                }
+                displayedText.Append(currentChar);
+            }
+
+            helveticaText.Text = displayedText.ToString();
+            helveticaText.GenerateText();
+            yield return new WaitForSeconds(0.1f);
+        }
         
         yield return null;
     }
