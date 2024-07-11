@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using System.Text;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class LocalGPTRequest : MonoBehaviour
 {
@@ -61,6 +62,7 @@ public class LocalGPTRequest : MonoBehaviour
 
     IEnumerator DisplayText(string text)
     {
+        var container = GameObject.FindWithTag("Container_text");
         SimpleHelvetica helveticaText = textObject.GetComponent<SimpleHelvetica>();
         if (helveticaText == null)
         {
@@ -68,6 +70,57 @@ public class LocalGPTRequest : MonoBehaviour
             yield break;
         }
         
+        //scaleMultiplier  depends on text size 
+        float scaleMultiplier = 0.2f;
+        /*if text.Length > 10
+        {
+            scaleMultiplier = 0.1f;
+        }
+        if text.Length > 50
+        {
+            scaleMultiplier = 0.05f;
+        }
+        else if text.Length > 100
+        {
+            scaleMultiplier = 0.02f;
+        }
+        else if text.Length > 300
+        {
+            scaleMultiplier = 0.01f;
+        }
+        else if text.Length > 500
+        {
+            scaleMultiplier = 0.005f;
+        }
+        else
+        {
+            scaleMultiplier = 0.2f;
+        }*/
+        switch (text.Length)
+        {
+            case int n when (n > 500):
+                scaleMultiplier = 0.005f;
+                break;
+            case int n when (n > 300):
+                scaleMultiplier = 0.01f;
+                break;
+            case int n when (n > 100):
+                scaleMultiplier = 0.02f;
+                break;
+            case int n when (n > 50):
+                scaleMultiplier = 0.05f;
+                break;
+            case int n when (n > 10):
+                scaleMultiplier = 0.1f;
+                break;
+            default:
+                scaleMultiplier = 0.2f;
+                break;
+        }
+
+
+        helveticaText.transform.localScale = new Vector3(scaleMultiplier, scaleMultiplier, scaleMultiplier);
+
         // Display characters one by one
         StringBuilder displayedText = new StringBuilder();
         for (int i = 0; i < text.Length; i++)
@@ -97,7 +150,7 @@ public class LocalGPTRequest : MonoBehaviour
                     case 'ù':
                         currentChar = 'u';
                         break;
-                    case 'ç':
+                    case 'ç': case 'Ç':
                         currentChar = 'c';
                         break;
                 }
@@ -107,6 +160,49 @@ public class LocalGPTRequest : MonoBehaviour
             helveticaText.Text = displayedText.ToString();
             helveticaText.GenerateText();
             yield return new WaitForSeconds(0.1f);
+        }
+
+        // Parcourir tous les enfants de textObject et leur ajouter les composants nécessaires
+        //Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Interactables/XRGrabInteractable.cs
+        //Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Transformers/XRGeneralGrabTransformer.cs
+
+        
+        foreach (Transform child in textObject.transform)
+        {
+            if (child.gameObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>() == null)
+            {
+                child.gameObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+            }
+
+            if (child.gameObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Transformers.XRGeneralGrabTransformer>() == null)
+            {
+                child.gameObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.Transformers.XRGeneralGrabTransformer>();
+            }
+
+            // add a fixed joint with the container object 
+            if (child.gameObject.GetComponent<FixedJoint>() == null)
+            {
+                child.gameObject.AddComponent<FixedJoint>();
+                child.gameObject.GetComponent<FixedJoint>().connectedBody = container.GetComponent<Rigidbody>();
+            }
+            //add a hinge joint between the letters 
+            /*
+            if (child.gameObject.GetComponent<HingeJoint>() == null)
+            {
+                //connect to neighbor is not the last letter
+                if (child.GetSiblingIndex() < text.Length - 1)
+                {
+                    child.gameObject.AddComponent<HingeJoint>();
+                    child.gameObject.GetComponent<HingeJoint>().connectedBody = textObject.transform.GetChild(child.GetSiblingIndex() + 1).GetComponent<Rigidbody>();
+                    //use spring
+                    child.gameObject.GetComponent<HingeJoint>().useSpring = true;
+                    //use limits
+                    child.gameObject.GetComponent<HingeJoint>().useLimits = true;
+                    child.gameObject.GetComponent<HingeJoint>().limits = new JointLimits { min = -10, max = 10 };
+                }
+            }
+            */
+
         }
         
         yield return null;
@@ -133,7 +229,7 @@ public class LocalGPTRequest : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.N))
         {
             StartCoroutine(SendGPTRequest());
         }
