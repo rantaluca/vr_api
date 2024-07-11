@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Anchor
   - Container_text
+  - Ground
   layers:
   - Default
   - TransparentFX

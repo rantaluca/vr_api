@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using System.Text;
+using UnityEditor;
 
 public class LocalGPTRequest : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class LocalGPTRequest : MonoBehaviour
     public string consign = "Answer in English. Be very short and funny with your answers. You must generate a funny sentence in less than 5 words";
     public string prompt = "Generate a funny sentence in less than 5 words";
     public string temperature = "0.7";
+    public string[] words;
     public GameObject emptyParentObject;
     public GameObject simpleHelveticaPrefab;
 
@@ -70,7 +72,7 @@ public class LocalGPTRequest : MonoBehaviour
 
     IEnumerator DisplayText(string text)
     {
-        string[] words = text.Split(' ');
+        words = text.Split(' ');
 
         for (int i = 0; i < words.Length; i++)
         {
@@ -89,12 +91,15 @@ public class LocalGPTRequest : MonoBehaviour
             words[i] = words[i].Replace("ç", "c");
             words[i] = words[i].ToLower();
 
+            // Ensure the tag exists before assigning it
+            AddTag(words[i]);
+
             GameObject wordObject = Instantiate(simpleHelveticaPrefab, emptyParentObject.transform);
             //define position to 00
             wordObject.transform.localPosition = new Vector3(0, 0, 0);
             wordObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
             wordObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.Transformers.XRGeneralGrabTransformer>();
-
+            wordObject.tag = words[i];
             SimpleHelvetica helveticaText = wordObject.GetComponent<SimpleHelvetica>();
             if (helveticaText == null)
             {
@@ -104,10 +109,41 @@ public class LocalGPTRequest : MonoBehaviour
 
             helveticaText.Text = words[i];
             helveticaText.GenerateText();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.4f);
         }
 
         yield return null;
+    }
+
+    // This method adds a new tag to the Tags list in the Editor settings
+    public void AddTag(string tag)
+    {
+        if (!IsTagExists(tag))
+        {
+            SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
+            SerializedProperty tagsProp = tagManager.FindProperty("tags");
+
+            int tagsCount = tagsProp.arraySize;
+            tagsProp.InsertArrayElementAtIndex(tagsCount);
+            SerializedProperty newTagProp = tagsProp.GetArrayElementAtIndex(tagsCount);
+            newTagProp.stringValue = tag;
+            tagManager.ApplyModifiedProperties();
+            tagManager.Update();
+        }
+    }
+
+    // This method checks if a tag already exists
+    public bool IsTagExists(string tag)
+    {
+        SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
+        SerializedProperty tagsProp = tagManager.FindProperty("tags");
+
+        for (int i = 0; i < tagsProp.arraySize; i++)
+        {
+            SerializedProperty tagProp = tagsProp.GetArrayElementAtIndex(i);
+            if (tagProp.stringValue.Equals(tag)) return true;
+        }
+        return false;
     }
 
     [System.Serializable]

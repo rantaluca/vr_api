@@ -122,6 +122,60 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &95151944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1837271089976029544, guid: 25a924471f17aed4b88194003b09933f, type: 3}
+  m_PrefabInstance: {fileID: 495483684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &95151948
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95151944}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5781044511722834877, guid: 25a924471f17aed4b88194003b09933f, type: 3}
+--- !u!54 &95151949
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95151944}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &299639867
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +447,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: rabbids_coliseum_fbx
       objectReference: {fileID: 0}
+    - target: {fileID: 1837271089976029544, guid: 25a924471f17aed4b88194003b09933f, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8797337247962737286, guid: 25a924471f17aed4b88194003b09933f, type: 3}
@@ -407,6 +465,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 25a924471f17aed4b88194003b09933f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 952044222}
+    - targetCorrespondingSourceObject: {fileID: 1837271089976029544, guid: 25a924471f17aed4b88194003b09933f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 95151949}
+    - targetCorrespondingSourceObject: {fileID: 1837271089976029544, guid: 25a924471f17aed4b88194003b09933f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 95151948}
     - targetCorrespondingSourceObject: {fileID: 4837429746946601833, guid: 25a924471f17aed4b88194003b09933f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1055887404}
@@ -645,7 +709,7 @@ Transform:
   m_GameObject: {fileID: 1144632318}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.08, y: 64.19, z: -33.68}
+  m_LocalPosition: {x: -3.4, y: 68.35, z: -14.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -670,6 +734,7 @@ MonoBehaviour:
     generate a funny sentence in less than 5 words
   prompt: Generate a  sentence in less than 5 words maximum
   temperature: 0.7
+  words: []
   emptyParentObject: {fileID: 1144632318}
   simpleHelveticaPrefab: {fileID: 2233620562356014276, guid: 61f52896889fb4b449eab239443aa5ea, type: 3}
 --- !u!1001 &1538011545
