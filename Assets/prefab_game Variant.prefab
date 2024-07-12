@@ -1919,8 +1919,8 @@ MonoBehaviour:
   m_ThresholdMoveRatioForScale: 0.05
   m_ClampScaling: 1
   m_MinimumScaleRatio: 0.01
-  m_MaximumScaleRatio: 3.81
-  m_ScaleMultiplier: 0.6
+  m_MaximumScaleRatio: 7.55
+  m_ScaleMultiplier: 2.31
 --- !u!65 &25481627764091755
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -51,7 +51,7 @@ public class AttachOnCollision : MonoBehaviour
             {
                 if (words[i] == words[index]) 
                 {
-                    newWords[newWordsIndex++] = words[index] + " " + neighbor;
+                    newWords[newWordsIndex++] = words[index] + "_" + neighbor;
                     continue;
                 }
                 if (words[i] == neighbor)

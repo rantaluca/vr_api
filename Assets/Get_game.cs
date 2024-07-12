@@ -97,8 +97,8 @@ public class LocalGPTRequest : MonoBehaviour
             GameObject wordObject = Instantiate(simpleHelveticaPrefab, emptyParentObject.transform);
             //define position to 00
             wordObject.transform.localPosition = new Vector3(0, 0, 0);
-            wordObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
-            wordObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.Transformers.XRGeneralGrabTransformer>();
+            //wordObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+            //wordObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.Transformers.XRGeneralGrabTransformer>();
             wordObject.tag = words[i];
             SimpleHelvetica helveticaText = wordObject.GetComponent<SimpleHelvetica>();
             if (helveticaText == null)
