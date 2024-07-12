@@ -12,6 +12,18 @@ public class AttachOnCollision : MonoBehaviour
     public GameObject simpleHelveticaPrefab;
     public GameObject emptyParentObject;
 
+	//sound effect Victory
+	public AudioSource audioSourceV;
+	public AudioClip audioClipV;
+	
+	//sound effect Lose
+	public AudioSource audioSourceL;
+	public AudioClip audioClipL;
+	
+	//sound effect Grass
+	public AudioSource audioSourceG;
+	public AudioClip audioClipG;
+	
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log(hasTouchedGround);
@@ -26,6 +38,10 @@ public class AttachOnCollision : MonoBehaviour
 
         if (neighbor != null && collision.gameObject.GetComponent<Rigidbody>() != null && collision.gameObject.tag == neighbor && hasTouchedGround)
         {
+			// PLAY SOUND
+			audioSourceV.clip = audioClipV;
+			audioSourceV.Play();
+			
             // CREATE A NEW HELVETICA TEXT OBJECT COMBINING THE TWO OTHERS AND DELETE THE TWO COLLIDING 
             AddTag(words[index] + "_" + neighbor);
             string[] newWords = new string[words.Length - 1];
@@ -72,10 +88,22 @@ public class AttachOnCollision : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (collision.gameObject.name == "rabbids_coliseum_fbx")
+        else if (collision.gameObject.name == "rabbids_coliseum_fbx")
         {
+			// PLAY SOUND
+			audioSourceG.clip = audioClipG;
+			audioSourceG.Play();
+			
             hasTouchedGround = true;
+			
         }
+		
+		else
+		{
+			// PLAY SOUND
+			audioSourceL.clip = audioClipL;
+			audioSourceL.Play();
+		}
         Debug.Log(collision.gameObject.name);    
     }
 
