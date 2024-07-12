@@ -10,8 +10,8 @@ public class LocalGPTRequest : MonoBehaviour
     public string apiUrl = "http://localhost:1234/v1/chat/completions";
     public string apiKey = "lm-studio";
     public string model = "TheBloke/Mistral-7B-Instruct-v0.2-GGUF";
-    public string consign = "Answer in English. Be very short and funny with your answers. You must generate a funny sentence in less than 5 words";
-    public string prompt = "Generate a funny sentence in less than 5 words";
+    public string consign = "Answer in English. Be concise with your answers.";
+    public string prompt = "Generate a random sentence, about anything, in less than 7 words.";
     public string temperature = "0.7";
     public string[] words;
     public GameObject emptyParentObject;
@@ -74,7 +74,7 @@ public class LocalGPTRequest : MonoBehaviour
     {
         words = text.Split(' ');
 
-        for (int i = 0; i < words.Length; i++)
+        for (int i = 1; i < words.Length; i++)
         {
             words[i] = words[i].Replace("à", "a");
             words[i] = words[i].Replace("é", "e");

@@ -7,6 +7,30 @@ TagManager:
   - Anchor
   - Container_text
   - Ground
+  - '"banana'
+  - slip
+  - on
+  - ape's
+  - head."
+  - (a
+  - banana
+  - peel
+  - slipping
+  - an
+  - head
+  - is
+  - a
+  - classic
+  - comedic
+  - image.)
+  - head."_(a
+  - on_ape's
+  - slip_on_ape's
+  - slipping_an
+  - slip_on_ape's_slipping_an
+  - comedic_image.)
+  - classic_comedic_image.)
+  - '"banana_slip_on_ape''s_slipping_an'
   layers:
   - Default
   - TransparentFX

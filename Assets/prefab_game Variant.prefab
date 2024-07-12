@@ -1951,6 +1951,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027e03e84af154d22abe2c439bec8902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  simpleHelveticaPrefab: {fileID: 2233620562356014276}
+  emptyParentObject: {fileID: 0}
 --- !u!1 &2233620562356014280 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100214, guid: ce72191ecb9a24885b5711cd938314a3, type: 3}
